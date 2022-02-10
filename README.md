@@ -1,4 +1,4 @@
-# CBLab API
+# Delivery API
 
 ## Objetivos da aplicação
 
