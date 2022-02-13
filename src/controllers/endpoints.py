@@ -5,7 +5,7 @@ import json, datetime
 
 app, api = server.app, server.api
 
-file=open("pedidos.json", "r")
+file=open("pedidos.json", "r", encoding="utf-8")
 pedidos = json.load(file)
 file.close()
 
@@ -22,9 +22,17 @@ def searchId(id):
                 return True, pedidos["pedidos"].index(dict)
     return False, False
 
+def searchStr(str):
+    qnt=0
+    for dict in pedidos["pedidos"]:
+        if dict is not None and str in dict.keys():
+            if dict[str].lower() == request.args.get(str).lower() and dict['entregue'] == True:
+                qnt+=1
+    return qnt
+
 def dumpDB():
-    file=open("pedidos.json", "w")
-    json.dump(pedidos, file)
+    with open('pedidos.json', 'w', encoding='utf8') as file:
+        json.dump(pedidos, file, ensure_ascii=False, indent=4)
     file.close()
 
 def boolean(i):
@@ -111,12 +119,12 @@ class consultarPedido(Resource):
 @api.route('/totalCliente')
 class consultarTotalCliente(Resource):
     def get(self, ):
-        qnt=0
-        for dict in pedidos["pedidos"]:
-            if dict is not None and "cliente" in dict.keys():
-                if dict["cliente"].lower() == request.args.get('cliente').lower() and dict['entregue'] == True:
-                    qnt+=1
+        qnt=searchStr("cliente")
         return qnt, 200
 
-
+@api.route('/totalProduto')
+class consultarTotalProduto(Resource):
+    def get(self, ):
+        qnt=searchStr("produto")
+        return qnt, 200
         
