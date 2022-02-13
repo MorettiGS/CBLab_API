@@ -41,7 +41,7 @@ def boolean(i):
     else:
         pedidos["pedidos"][i]['entregue'] = False
 
-@api.route('/')
+@api.route('/geral')
 class consultarBD(Resource):
     def get(self, ):
         return pedidos
@@ -101,7 +101,6 @@ class excluirPedido(Resource):
         if found == False:
             raise Exception("Id do pedido não pode ser encontrado")
         else:
-            response = pedidos["pedidos"][pos]
             del pedidos["pedidos"][pos]
             dumpDB()
             return "Pedido excluído com sucesso", 200
