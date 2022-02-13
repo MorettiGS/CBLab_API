@@ -86,5 +86,16 @@ class atualizarEntrega(Resource):
             dumpDB()
             return response, 200
 
+@api.route('/excluir')
+class excluirPedido(Resource):
+    def delete(self, ):
+        found, pos = search(int(request.args['id']))
+        if found == False:
+            raise Exception("Id do pedido não pode ser encontrado")
+        else:
+            response = pedidos["pedidos"][pos]
+            del pedidos["pedidos"][pos]
+            dumpDB()
+            return "Pedido excluído com sucesso", 200
 
         
