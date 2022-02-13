@@ -22,7 +22,7 @@ def search(id):
                 return True, pedidos["pedidos"].index(dict)
     return False, False
 
-def dumpBD():
+def dumpDB():
     file=open("pedidos.json", "w")
     json.dump(pedidos, file)
     file.close()
@@ -47,10 +47,23 @@ class criarPedido(Resource):
         pedidos["pedidos"].append(response)
 
         next_id()
-        dumpBD()
+        dumpDB()
 
         return response, 200
 
-
+@api.route('/atualizar')
+class atualizarPedido(Resource):
+    def put(self, ):
+        found, pos = search(int(request.args['id']))
+        if found == False:
+            raise Exception("Id do pedido não pode ser encontrado")
+        else:
+            pedidos["pedidos"][pos]['cliente'] = request.args.get('cliente')
+            pedidos["pedidos"][pos]['produto'] = request.args.get('produto')
+            pedidos["pedidos"][pos]['valor'] = round(float(request.args.get('valor')),2)
+            pedidos["pedidos"][pos]['entregue'] = request.args.get('entregue')
+            response = pedidos["pedidos"][pos]
+            dumpDB()
+            return response, 200
 
         
