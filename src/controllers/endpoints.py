@@ -98,4 +98,14 @@ class excluirPedido(Resource):
             dumpDB()
             return "Pedido excluído com sucesso", 200
 
+@api.route('/consultar')
+class consultarPedido(Resource):
+    def get(self, ):
+        found, pos = search(int(request.args['id']))
+        if found == False:
+            raise Exception("Id do pedido não pode ser encontrado")
+        else:
+            response = pedidos["pedidos"][pos]
+            return response, 200
+
         
