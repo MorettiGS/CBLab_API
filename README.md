@@ -13,7 +13,7 @@ Desenvolvimento de uma aplicação CRUD com uma API simples, que possa:
 
 A aplicação será desenvolvida em linguagem Python3, fazendo uso do framework Flask para criá-la e auxiliar também no desenvolvimento da API.
 
-Você pode conferir o desenvolvimento do projeto por meio da seção de _issues_ deste repositório, com suas respectivas tarefas por _issue_ e os comentários necessários. É possível encontrá-las neste [link](https://github.com/MorettiGS/CBLab_API/issues).
+Você pode conferir o desenvolvimento do projeto por meio da seção de _issues_ deste repositório, com suas respectivas tarefas por _issue_ e os comentários necessários. É possível encontrá-las neste [link](https://github.com/MorettiGS/delivery-api/issues?q=is%3Aissue+is%3Aclosed+sort%3Acreated-asc).
 
 ## Como executar a aplicação
 
