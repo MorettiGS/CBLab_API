@@ -10,12 +10,12 @@ pedidos = json.load(file)
 file.close()
 
 def next_id():
-    found, pos = search(pedidos["nextId"])
+    found, pos = searchId(pedidos["nextId"])
     while found:
         pedidos["nextId"]+=1
-        found, pos = search(pedidos["nextId"])
+        found, pos = searchId(pedidos["nextId"])
 
-def search(id):  
+def searchId(id):  
     for dict in pedidos["pedidos"]:
         if dict is not None:
             if dict['id'] == id:
@@ -60,7 +60,7 @@ class criarPedido(Resource):
 @api.route('/atualizar')
 class atualizarPedido(Resource):
     def put(self, ):
-        found, pos = search(int(request.args['id']))
+        found, pos = searchId(int(request.args['id']))
         if found == False:
             raise Exception("Id do pedido não pode ser encontrado")
         else:
@@ -76,7 +76,7 @@ class atualizarPedido(Resource):
 @api.route('/statusEntrega')
 class atualizarEntrega(Resource):
     def put(self, ):
-        found, pos = search(int(request.args['id']))
+        found, pos = searchId(int(request.args['id']))
         if found == False:
             raise Exception("Id do pedido não pode ser encontrado")
         else:
@@ -89,7 +89,7 @@ class atualizarEntrega(Resource):
 @api.route('/excluir')
 class excluirPedido(Resource):
     def delete(self, ):
-        found, pos = search(int(request.args['id']))
+        found, pos = searchId(int(request.args['id']))
         if found == False:
             raise Exception("Id do pedido não pode ser encontrado")
         else:
@@ -101,11 +101,22 @@ class excluirPedido(Resource):
 @api.route('/consultar')
 class consultarPedido(Resource):
     def get(self, ):
-        found, pos = search(int(request.args['id']))
+        found, pos = searchId(int(request.args['id']))
         if found == False:
             raise Exception("Id do pedido não pode ser encontrado")
         else:
             response = pedidos["pedidos"][pos]
             return response, 200
+
+@api.route('/totalCliente')
+class consultarTotalCliente(Resource):
+    def get(self, ):
+        qnt=0
+        for dict in pedidos["pedidos"]:
+            if dict is not None and "cliente" in dict.keys():
+                if dict["cliente"].lower() == request.args.get('cliente').lower() and dict['entregue'] == True:
+                    qnt+=1
+        return qnt, 200
+
 
         
