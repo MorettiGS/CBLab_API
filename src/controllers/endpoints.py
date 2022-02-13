@@ -22,11 +22,11 @@ def searchId(id):
                 return True, pedidos["pedidos"].index(dict)
     return False, False
 
-def searchStr(str):
+def searchStr(str,value):
     qnt=0
     for dict in pedidos["pedidos"]:
         if dict is not None and str in dict.keys():
-            if dict[str].lower() == request.args.get(str).lower() and dict['entregue'] == True:
+            if dict[str].lower() == value.lower() and dict['entregue'] == True:
                 qnt+=1
     return qnt
 
@@ -119,12 +119,24 @@ class consultarPedido(Resource):
 @api.route('/totalCliente')
 class consultarTotalCliente(Resource):
     def get(self, ):
-        qnt=searchStr("cliente")
+        qnt=searchStr("cliente", request.args.get("cliente"))
         return qnt, 200
 
 @api.route('/totalProduto')
 class consultarTotalProduto(Resource):
     def get(self, ):
-        qnt=searchStr("produto")
+        qnt=searchStr("produto", request.args.get("produto"))
         return qnt, 200
+
+@api.route('/ordemProduto')
+class consultarOrdemProduto(Resource):
+    def get(self, ):
+        dictVendidos, response={},{}
+        for dict in pedidos["pedidos"]:
+            if dict is not None and "produto" in dict.keys():
+                if dict["produto"] not in dictVendidos.keys():
+                    dictVendidos[dict["produto"]] = searchStr("produto", dict["produto"])
+        for dict in sorted(dictVendidos, key=dictVendidos.get, reverse=True):
+            response[dict] = dictVendidos[dict]
+        return response, 200
         
