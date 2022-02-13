@@ -27,6 +27,12 @@ def dumpDB():
     json.dump(pedidos, file)
     file.close()
 
+def boolean(i):
+    if pedidos["pedidos"][i]['entregue'].lower() == "true":
+        pedidos["pedidos"][i]['entregue'] = True
+    else:
+        pedidos["pedidos"][i]['entregue'] = False
+
 @api.route('/')
 class consultarBD(Resource):
     def get(self, ):
@@ -62,8 +68,23 @@ class atualizarPedido(Resource):
             pedidos["pedidos"][pos]['produto'] = request.args.get('produto')
             pedidos["pedidos"][pos]['valor'] = round(float(request.args.get('valor')),2)
             pedidos["pedidos"][pos]['entregue'] = request.args.get('entregue')
+            boolean(pos)
             response = pedidos["pedidos"][pos]
             dumpDB()
             return response, 200
+    
+@api.route('/statusEntrega')
+class atualizarEntrega(Resource):
+    def put(self, ):
+        found, pos = search(int(request.args['id']))
+        if found == False:
+            raise Exception("Id do pedido não pode ser encontrado")
+        else:
+            pedidos["pedidos"][pos]['entregue'] = request.args.get('entregue')
+            boolean(pos)
+            response = pedidos["pedidos"][pos]
+            dumpDB()
+            return response, 200
+
 
         
