@@ -27,7 +27,7 @@ Como pedido, a aplicação deverá ser armazenada em uma imagem Docker, esta que
 
 ### Utilizando Docker
 
-Partindo do pressuposto que o usuário possui Docker em seu computador, você deverá primeiro encontrar, em seu terminal, o diretório do projeto, este podendo ser baixado após digitar o código existente no repositório Docker apresentado `docker pull morettigs27/delivery-api:app`. Após estar localizado no mesmo, deverá digitar o seguinte comando: `docker -p 5000:5000 delivery.api`, isto deverá iniciar o container Docker na sua máquina.
+Partindo do pressuposto que o usuário possui Docker em seu computador, você deverá primeiro encontrar, em seu terminal, o diretório do projeto, este podendo ser baixado após digitar o código existente no repositório Docker apresentado `docker pull morettigs27/delivery-api:app`. Após estar localizado no mesmo, deverá digitar o seguinte comando: `docker run -p 5000:5000 morettigs27/delivery-api:app`, isto deverá iniciar um novo container Docker na sua máquina.
 
 Dessa forma, isso também iniciará a sua aplicação, retornando no terminal alguns dados relacionados ao estado da mesma. Esta aplicação, após iniciada, se encontrará na porta localhost:5000, ou seja, no link http://localhost:5000/. Para continuidade, verifique o tópico 'Ferramentas de teste'.
 
